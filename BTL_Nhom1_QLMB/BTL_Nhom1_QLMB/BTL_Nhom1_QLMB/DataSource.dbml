@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QuanLyChuyenBay" Class="DataSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-81E24USV;Initial Catalog=QuanLyChuyenBay;Integrated Security=True" SettingsObjectName="BTL_Nhom1_QLMB.Properties.Settings" SettingsPropertyName="QuanLyChuyenBayConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ChuyenBay" Member="ChuyenBays">
+    <Type Name="ChuyenBay">
+      <Column Name="macb" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="sbdi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sbden" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="giodi" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="gioden" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="ngaydi" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ngayden" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="sohieu" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="ChuyenBay_DatCho" Member="DatChos" ThisKey="macb" OtherKey="macb" Type="DatCho" />
+      <Association Name="ChuyenBay_LichBay" Member="LichBays" ThisKey="macb" OtherKey="macb" Type="LichBay" />
+      <Association Name="MayBay_ChuyenBay" Member="MayBay" ThisKey="sohieu" OtherKey="sohieu" Type="MayBay" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NguoiDung" Member="NguoiDungs">
+    <Type Name="NguoiDung">
+      <Column Name="ten_dn" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="matkhau" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="loainguoidung" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="NguoiDung_KhachHang" Member="KhachHangs" ThisKey="ten_dn" OtherKey="ten_dn" Type="KhachHang" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DatCho" Member="DatChos">
+    <Type Name="DatCho">
+      <Column Name="soghe" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="makh" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="macb" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="thoigiandi" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="ChuyenBay_DatCho" Member="ChuyenBay" ThisKey="macb" OtherKey="macb" Type="ChuyenBay" IsForeignKey="true" DeleteRule="SET NULL" />
+      <Association Name="KhachHang_DatCho" Member="KhachHang" ThisKey="makh" OtherKey="makh" Type="KhachHang" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KhachHang" Member="KhachHangs">
+    <Type Name="KhachHang">
+      <Column Name="makh" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="diachi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sdt" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="cmt" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ten_dn" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="dadatcho" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="KhachHang_DatCho" Member="DatChos" ThisKey="makh" OtherKey="makh" Type="DatCho" />
+      <Association Name="NguoiDung_KhachHang" Member="NguoiDung" ThisKey="ten_dn" OtherKey="ten_dn" Type="NguoiDung" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LichBay" Member="LichBays">
+    <Type Name="LichBay">
+      <Column Name="ngaydi" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="macb" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="sohieu" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="ChuyenBay_LichBay" Member="ChuyenBay" ThisKey="macb" OtherKey="macb" Type="ChuyenBay" IsForeignKey="true" DeleteRule="SET NULL" />
+      <Association Name="MayBay_LichBay" Member="MayBay" ThisKey="sohieu" OtherKey="sohieu" Type="MayBay" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoaiMayBay" Member="LoaiMayBays">
+    <Type Name="LoaiMayBay">
+      <Column Name="maloai" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="hang_sx" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="LoaiMayBay_MayBay" Member="MayBays" ThisKey="maloai" OtherKey="maloai" Type="MayBay" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MayBay" Member="MayBays">
+    <Type Name="MayBay">
+      <Column Name="sohieu" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="maloai" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="MayBay_ChuyenBay" Member="ChuyenBays" ThisKey="sohieu" OtherKey="sohieu" Type="ChuyenBay" />
+      <Association Name="MayBay_LichBay" Member="LichBays" ThisKey="sohieu" OtherKey="sohieu" Type="LichBay" />
+      <Association Name="LoaiMayBay_MayBay" Member="LoaiMayBay" ThisKey="maloai" OtherKey="maloai" Type="LoaiMayBay" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
+</Database>
